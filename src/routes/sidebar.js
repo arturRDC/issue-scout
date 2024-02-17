@@ -30,29 +30,29 @@ const routes = [
     name: 'Dashboard',
   },
   {
-    path: '/app/leads', 
-    icon: <InboxArrowDownIcon className={iconClasses} />, 
-    name: 'Projects', 
+    path: '/app/projects',
+    icon: <InboxArrowDownIcon className={iconClasses} />,
+    name: 'Projects',
   },
   {
-    path: '/app/transactions', 
-    icon: <UsersIcon className={iconClasses} />, 
-    name: 'Users', 
+    path: '/app/transactions',
+    icon: <UsersIcon className={iconClasses} />,
+    name: 'Users',
   },
   {
-    path: '/app/charts', 
-    icon: <QueueListIcon className={iconClasses} />, 
-    name: 'My Tickets', 
+    path: '/app/charts',
+    icon: <QueueListIcon className={iconClasses} />,
+    name: 'My Tickets',
   },
   {
-    path: '', 
-    icon: <Cog6ToothIcon className={`${iconClasses} inline`} />, 
-    name: 'Settings', 
+    path: '',
+    icon: <Cog6ToothIcon className={`${iconClasses} inline`} />,
+    name: 'Settings',
     submenu: [
       {
         path: '/app/settings-profile', //url
-        icon: <UserIcon className={submenuIconClasses} />, 
-        name: 'Profile', 
+        icon: <UserIcon className={submenuIconClasses} />,
+        name: 'Profile',
       },
       {
         path: '/app/settings-notifications',
@@ -62,20 +62,20 @@ const routes = [
     ],
   },
   // {
-  //   path: '/app/integration', 
-  //   icon: <BoltIcon className={iconClasses} />, 
-  //   name: 'Integration', 
+  //   path: '/app/integration',
+  //   icon: <BoltIcon className={iconClasses} />,
+  //   name: 'Integration',
   // },
   // {
-  //   path: '/app/calendar', 
-  //   icon: <CalendarDaysIcon className={iconClasses} />, 
-  //   name: 'Calendar', 
+  //   path: '/app/calendar',
+  //   icon: <CalendarDaysIcon className={iconClasses} />,
+  //   name: 'Calendar',
   // },
 
   // {
   //   path: '', //no url needed as this has submenu
-  //   icon: <DocumentDuplicateIcon className={`${iconClasses} inline`} />, 
-  //   name: 'Pages', 
+  //   icon: <DocumentDuplicateIcon className={`${iconClasses} inline`} />,
+  //   name: 'Pages',
   //   submenu: [
   //     {
   //       path: '/login',
@@ -84,8 +84,8 @@ const routes = [
   //     },
   //     {
   //       path: '/register', //url
-  //       icon: <UserIcon className={submenuIconClasses} />, 
-  //       name: 'Register', 
+  //       icon: <UserIcon className={submenuIconClasses} />,
+  //       name: 'Register',
   //     },
   //     {
   //       path: '/forgot-password',
@@ -107,13 +107,13 @@ const routes = [
 
   // {
   //   path: '', //no url needed as this has submenu
-  //   icon: <DocumentTextIcon className={`${iconClasses} inline`} />, 
-  //   name: 'Documentation', 
+  //   icon: <DocumentTextIcon className={`${iconClasses} inline`} />,
+  //   name: 'Documentation',
   //   submenu: [
   //     {
-  //       path: '/app/getting-started', 
-  //       icon: <DocumentTextIcon className={submenuIconClasses} />, 
-  //       name: 'Getting Started', 
+  //       path: '/app/getting-started',
+  //       icon: <DocumentTextIcon className={submenuIconClasses} />,
+  //       name: 'Getting Started',
   //     },
   //     {
   //       path: '/app/features',
