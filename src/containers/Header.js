@@ -24,9 +24,9 @@ function Header() {
         window.matchMedia &&
         window.matchMedia('(prefers-color-scheme: dark)').matches
       ) {
-        setCurrentTheme('dark');
+        setCurrentTheme('darktheme');
       } else {
-        setCurrentTheme('light');
+        setCurrentTheme('lighttheme');
       }
     }
     // 👆 false parameter is required for react project
