@@ -17,6 +17,7 @@
     "axios": "^1.1.3",
     "capitalize-the-first-letter": "^1.0.8",
     "chart.js": "^4.0.1",
+    "date-fns": "^3.6.0",
     "dayjs": "^1.11.7",
     "moment": "^2.29.4",
     "react": "^18.2.0",

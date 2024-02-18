@@ -13,8 +13,8 @@ const INITIAL_PROJECT_OBJ = {
   name: '',
   desc: '',
   manager: token,
-  last_updated: moment(new Date()).format('DD MMM YY'),
-  created_at: moment(new Date()).format('DD MMM YY'),
+  updatedAt: moment(new Date()).format('dd MMM yy HH:mm'),
+  createdAt: moment(new Date()).format('DD MMM YY'),
 };
 
 function AddProjectModalBody({ closeModal }) {
@@ -33,8 +33,8 @@ function AddProjectModalBody({ closeModal }) {
         name: projectObj.name,
         desc: projectObj.desc,
         manager: token,
-        last_updated: moment(new Date()).format('DD MMM YY'),
-        created_at: moment(new Date()).format('DD MMM YY'),
+        updatedAt: moment(new Date()).format('DD MMM YY HH:mm'),
+        createdAt: moment(new Date()).format('DD MMM YY'),
       };
       dispatch(addNewProject({ newProjectObj }));
       dispatch(showNotification({ message: 'New Project Added!', status: 1 }));

@@ -8,6 +8,7 @@ import { MODAL_BODY_TYPES } from '../../utils/globalConstantUtil';
 import TrashIcon from '@heroicons/react/24/outline/TrashIcon';
 import { showNotification } from '../common/headerSlice';
 import { useNavigate } from 'react-router-dom';
+import { parse, formatDistanceToNow } from 'date-fns';
 
 const TopSideButtons = () => {
   const dispatch = useDispatch();
@@ -80,20 +81,13 @@ function Projects() {
                       </div>
                     </td>
                     <td>
-                      {moment(new Date())
-                        .add(-5 * (k + 2), 'days')
-                        .format('DD MMM YY')}
+                      {formatDistanceToNow(
+                        parse(l.updatedAt, 'dd MMM yy HH:mm', new Date()),
+                        { addSuffix: true }
+                      )}
                     </td>
-                    <td>
-                      {l.first_name
-                        ? `${l.first_name} ${l.last_name}`
-                        : l.manager}
-                    </td>
-                    <td>
-                      {moment(new Date())
-                        .add(-5 * (k + 2), 'days')
-                        .format('DD MMM YY')}
-                    </td>
+                    <td>{l.manager}</td>
+                    <td>{l.createdAt}</td>
                   </tr>
                 );
               })}
