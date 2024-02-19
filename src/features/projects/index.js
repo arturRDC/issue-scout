@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import TitleCard from '../../components/Cards/TitleCard';
 import { openModal } from '../common/modalSlice';
 import { deleteProject, getProjectsContent } from './projectSlice';
-import { MODAL_BODY_TYPES } from '../../utils/globalConstantUtil';
-import TrashIcon from '@heroicons/react/24/outline/TrashIcon';
+import {
+  CONFIRMATION_MODAL_CLOSE_TYPES,
+  MODAL_BODY_TYPES,
+} from '../../utils/globalConstantUtil';
 import { showNotification } from '../common/headerSlice';
 import { useNavigate } from 'react-router-dom';
 import { parse, formatDistanceToNow } from 'date-fns';

@@ -25,6 +25,11 @@ export const projectsSlice = createSlice({
       let { index } = action.payload;
       state.projects.splice(index, 1);
     },
+
+    editProject: (state, action) => {
+      let { index, updatedProjectObj } = action.payload;
+      state.projects[index] = updatedProjectObj;
+    },
   },
 
   extraReducers: {
@@ -41,6 +46,7 @@ export const projectsSlice = createSlice({
   },
 });
 
-export const { addNewProject, deleteProject } = projectsSlice.actions;
+export const { addNewProject, deleteProject, editProject } =
+  projectsSlice.actions;
 
 export default projectsSlice.reducer;

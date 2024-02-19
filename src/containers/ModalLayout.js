@@ -5,6 +5,7 @@ import { closeModal } from '../features/common/modalSlice';
 import AddLeadModalBody from '../features/leads/components/AddLeadModalBody';
 import AddProjectModalBody from '../features/projects/components/AddProjectModalBody';
 import ConfirmationModalBody from '../features/common/components/ConfirmationModalBody';
+import EditProjectModalBody from '../features/project/components/EditProjectModalBody';
 
 function ModalLayout() {
   const { isOpen, bodyType, size, extraObject, title } = useSelector(
@@ -42,6 +43,12 @@ function ModalLayout() {
               ),
               [MODAL_BODY_TYPES.PROJECT_ADD_NEW]: (
                 <AddProjectModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+              [MODAL_BODY_TYPES.PROJECT_EDIT]: (
+                <EditProjectModalBody
                   closeModal={close}
                   extraObject={extraObject}
                 />

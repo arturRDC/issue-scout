@@ -3,6 +3,7 @@ module.exports = Object.freeze({
     USER_DETAIL: 'USER_DETAIL',
     LEAD_ADD_NEW: 'LEAD_ADD_NEW',
     PROJECT_ADD_NEW: 'PROJECT_ADD_NEW',
+    PROJECT_EDIT: 'PROJECT_EDIT',
     CONFIRMATION: 'CONFIRMATION',
     DEFAULT: '',
   },
@@ -14,5 +15,6 @@ module.exports = Object.freeze({
 
   CONFIRMATION_MODAL_CLOSE_TYPES: {
     LEAD_DELETE: 'LEAD_DELETE',
+    PROJECT_DELETE: 'PROJECT_DELETE',
   },
 });
