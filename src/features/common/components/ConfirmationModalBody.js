@@ -3,6 +3,7 @@ import axios from 'axios'
 import { CONFIRMATION_MODAL_CLOSE_TYPES, MODAL_CLOSE_TYPES } from '../../../utils/globalConstantUtil'
 import { deleteLead } from '../../leads/leadSlice'
 import { showNotification } from '../headerSlice'
+import { deleteProject } from '../../projects/projectSlice'
 
 function ConfirmationModalBody({ extraObject, closeModal}){
 
@@ -16,6 +17,11 @@ function ConfirmationModalBody({ extraObject, closeModal}){
             // positive response, call api or dispatch redux function
             dispatch(deleteLead({index}))
             dispatch(showNotification({message : "Lead Deleted!", status : 1}))
+        }
+        if(type === CONFIRMATION_MODAL_CLOSE_TYPES.PROJECT_DELETE){
+            // positive response, call api or dispatch redux function
+            dispatch(deleteProject({index}))
+            dispatch(showNotification({message : "Project Deleted!", status : 1}))
         }
         closeModal()
     }
