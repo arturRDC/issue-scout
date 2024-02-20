@@ -40,7 +40,8 @@ function Projects() {
   const { projects } = useSelector((state) => state.project);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  console.log('projects: ');
+  console.log(projects);
   const goRouteId = (id) => {
     navigate(`/app/projects/${id}`);
   };
@@ -68,7 +69,7 @@ function Projects() {
               </tr>
             </thead>
             <tbody>
-              {projects.map((l, k) => {
+              {projects?.map((l, k) => {
                 return (
                   <tr
                     key={k}

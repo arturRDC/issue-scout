@@ -5,6 +5,8 @@ export const getProjectsContent = createAsyncThunk(
   '/projects/content',
   async () => {
     const response = await axios.get('/api/projects', {});
+    console.log('response.data');
+    console.log(response.data);
     return response.data;
   }
 );
