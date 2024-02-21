@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import TitleCard from '../../../components/Cards/TitleCard';
 import { showNotification } from '../../common/headerSlice';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const TopSideButtons = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,27 @@ const TopSideButtons = () => {
     </div>
   );
 };
+
+function RoleSelect({ role, userId }) {
+  const { id } = useParams();
+  const handleRoleSelect = (e) => {
+    const role = e.target.value;
+    axios.post(`/api/projects/${id}/changeRole/${userId}/${role}`);
+  };
+  return (
+    <>
+      <select
+        className='select select-bordered select-sm w-max'
+        defaultValue={role}
+        onChange={handleRoleSelect}
+      >
+        <option value={'Developer'}>Developer</option>
+        <option value={'Manager'}>Manager</option>
+        <option value={'Submitter'}>Submitter</option>
+      </select>
+    </>
+  );
+}
 
 function Team() {
   const [members, setMembers] = useState([]);
@@ -48,20 +70,6 @@ function Team() {
   //       return <div className='badge badge-accent'>{role}</div>;
   //     else return <div className='badge badge-ghost'>{role}</div>;
   //   };
-  const getRoleComponent = (role) => {
-    return (
-      <>
-        <select
-          className='select select-bordered select-sm w-max'
-          defaultValue={role}
-        >
-          <option value={'Manager'}>Manager</option>
-          <option value={'Developer'}>Developer</option>
-          <option value={'Submitter'}>Submitter</option>
-        </select>
-      </>
-    );
-  };
 
   return (
     <>
@@ -95,7 +103,10 @@ function Team() {
                   </td>
                   <td>{l.email}</td>
                   <td>{l.joinedOn}</td>
-                  <td>{getRoleComponent(l.role)}</td>
+                  {/* <td>{RoleSelect(l.role, l.id)}</td> */}
+                  <td>
+                    <RoleSelect role={l.role} userId={l.id}></RoleSelect>
+                  </td>
                   <td>{l.lastActive}</td>
                 </tr>
               );
