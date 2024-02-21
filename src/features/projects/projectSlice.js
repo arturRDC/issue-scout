@@ -26,6 +26,7 @@ export const projectsSlice = createSlice({
     deleteProject: (state, action) => {
       let { index } = action.payload;
       state.projects.splice(index, 1);
+      axios.delete(`/api/projects/${index}/delete`);
     },
 
     editProject: (state, action) => {
