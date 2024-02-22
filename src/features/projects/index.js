@@ -75,7 +75,7 @@ function Projects() {
                     key={k}
                     className='hover cursor-pointer'
                     onClick={() => {
-                      goRouteId(k + 1);
+                      goRouteId(l.id);
                     }}
                   >
                     <td>
