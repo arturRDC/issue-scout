@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Autocomplete from '../../../components/Input/Autocomplete';
 import axios from 'axios';
 
-function UsersAutocomplete({ updateFormValue, updateType }) {
+function UsersAutocomplete({ updateFormValue, updateType, defaultValue }) {
   //query typed by user
-  const [val, setVal] = useState('');
+  const [val, setVal] = useState(defaultValue);
 
   function handleChange(obj) {
     setVal(obj.name);

@@ -8,6 +8,7 @@ import AddUserProjectModalBody from '../features/project/components/AddUserProje
 import ConfirmationModalBody from '../features/common/components/ConfirmationModalBody';
 import EditProjectModalBody from '../features/project/components/EditProjectModalBody';
 import AddTicketProjectModalBody from '../features/project/components/AddTicketProjectModalBody';
+import EditTicketModalBody from '../features/ticket/components/EditTicketModalBody';
 
 function ModalLayout() {
   const { isOpen, bodyType, size, extraObject, title } = useSelector(
@@ -63,6 +64,12 @@ function ModalLayout() {
               ),
               [MODAL_BODY_TYPES.PROJECT_EDIT]: (
                 <EditProjectModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+              [MODAL_BODY_TYPES.TICKET_EDIT]: (
+                <EditTicketModalBody
                   closeModal={close}
                   extraObject={extraObject}
                 />

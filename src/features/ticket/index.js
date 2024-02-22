@@ -32,11 +32,11 @@ const TopSideButtons = () => {
     );
   };
 
-  const openEditProjectModal = () => {
+  const openEditTicketModal = () => {
     dispatch(
       openModal({
-        title: 'Edit Project',
-        bodyType: MODAL_BODY_TYPES.PROJECT_EDIT,
+        title: 'Edit Ticket',
+        bodyType: MODAL_BODY_TYPES.TICKET_EDIT,
         extraObject: id,
       })
     );
@@ -46,9 +46,9 @@ const TopSideButtons = () => {
     <div className='inline-block float-right flex gap-2'>
       <button
         className='btn px-6 btn-sm normal-case btn-primary'
-        onClick={() => openEditProjectModal()}
+        onClick={() => openEditTicketModal()}
       >
-        Edit Project
+        Edit Ticket
       </button>
       <button
         className='btn px-6 btn-sm normal-case btn'
@@ -153,8 +153,13 @@ function Ticket() {
                 </div>
                 <div className='divider mt-2'></div>
                 <div className='grid grid-cols-2 gap-y-4'>
+                  
+                  <p className='font-semibold'>Id: </p>
+                  <p className='prose'>2</p>
+
                   <p className='font-semibold'>Description: </p>
                   <p className='prose'>{project.desc}</p>
+
                   <p className='font-semibold'>Priority:</p>
                   <p>High</p>
 
