@@ -90,11 +90,11 @@ const AddTicketButton = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const openAddUserProjectModal = () => {
+  const openAddTicketProjectModal = () => {
     dispatch(
       openModal({
         title: 'Add Ticket',
-        bodyType: MODAL_BODY_TYPES.PROJECT_ADD_USER,
+        bodyType: MODAL_BODY_TYPES.PROJECT_ADD_TICKET,
         extraObject: id,
       })
     );
@@ -104,7 +104,7 @@ const AddTicketButton = () => {
     <div className='inline-block float-right flex gap-2'>
       <button
         className='btn px-6 btn-sm normal-case btn-primary'
-        onClick={() => openAddUserProjectModal()}
+        onClick={() => openAddTicketProjectModal()}
       >
         Add Ticket
       </button>

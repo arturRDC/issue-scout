@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import TitleCard from '../../../components/Cards/TitleCard';
 import { showNotification } from '../../common/headerSlice';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const TopSideButtons = () => {
   const dispatch = useDispatch();
@@ -50,6 +50,7 @@ function RoleSelect({ role, userId }) {
 
 function Tickets() {
   const [members, setMembers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchUsers() {
@@ -71,12 +72,18 @@ function Tickets() {
 
     const getDifficultyComponent = getPriorityComponent;
 
+
+    const goRouteId = (id) => {
+      navigate(`/app/tickets/${id}`);
+    };
+
   return (
     <>
       <div className='overflow-x-auto w-full'>
         <table className='table w-full'>
           <thead>
             <tr>
+              <th>Id</th>
               <th>Title</th>
               <th>Type</th>
               <th>Priority</th>
@@ -89,7 +96,14 @@ function Tickets() {
           <tbody>
             {members.map((l, k) => {
               return (
-                <tr key={k}>
+                <tr key={k}
+                className='hover cursor-pointer'
+                    onClick={() => {
+                      goRouteId(l.id);
+                    }}>
+                  <td>
+                    l.id
+                  </td>
                   <td>
                     <div className='font-bold'>l.title</div>
                   </td>
