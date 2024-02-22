@@ -18,14 +18,14 @@ const TopSideButtons = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const deleteCurrentProject = (index) => {
+  const deleteCurrentTicket = (index) => {
     dispatch(
       openModal({
         title: 'Confirmation',
         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
         extraObject: {
-          message: `Are you sure you want to delete this project?`,
-          type: CONFIRMATION_MODAL_CLOSE_TYPES.PROJECT_DELETE,
+          message: `Are you sure you want to delete this ticket?`,
+          type: CONFIRMATION_MODAL_CLOSE_TYPES.TICKET_DELETE,
           index,
         },
       })
@@ -52,9 +52,9 @@ const TopSideButtons = () => {
       </button>
       <button
         className='btn px-6 btn-sm normal-case btn'
-        onClick={() => deleteCurrentProject(id - 1)}
+        onClick={() => deleteCurrentTicket(id)}
       >
-        Delete Project
+        Delete Ticket
       </button>
     </div>
   );

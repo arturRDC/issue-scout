@@ -28,6 +28,12 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
       dispatch(showNotification({ message: 'Project Deleted!', status: 1 }));
       navigate('/app/projects');
     }
+    if (type === CONFIRMATION_MODAL_CLOSE_TYPES.TICKET_DELETE) {
+      // positive response, call api or dispatch redux function
+      axios.delete(`/api/tickets/${index}`)
+      dispatch(showNotification({ message: 'Ticket Deleted!', status: 1 }));
+      navigate('/app/projects');
+    }
     closeModal();
   };
 
