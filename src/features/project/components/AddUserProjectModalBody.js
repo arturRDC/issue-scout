@@ -59,8 +59,10 @@ function AddUserProjectModalBody({ closeModal, extraObject }) {
       <label className='label'>
         <span className={'label-text text-base-content '}>Name</span>
       </label>
-      <UsersAutocomplete updateFormValue={updateFormValue}></UsersAutocomplete>
-      
+      <UsersAutocomplete
+        updateFormValue={updateFormValue}
+        updateType={'user'}
+      ></UsersAutocomplete>
 
       <label className='label'>
         <span className={'label-text text-base-content '}>Role</span>

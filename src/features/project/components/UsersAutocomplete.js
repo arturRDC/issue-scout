@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Autocomplete from '../../../components/Input/Autocomplete';
 import axios from 'axios';
 
-function UsersAutocomplete({ updateFormValue }) {
+function UsersAutocomplete({ updateFormValue, updateType }) {
   //query typed by user
   const [val, setVal] = useState('');
 
@@ -14,7 +14,7 @@ function UsersAutocomplete({ updateFormValue }) {
     // console.log('obj.id');
     // console.log(obj.id);
     // updateFormValue({ updateType: 'name', value: obj.name });
-    updateFormValue({updateType: 'user', value: obj});
+    updateFormValue({updateType: updateType, value: obj});
   }
 
   //a list to hold all the users

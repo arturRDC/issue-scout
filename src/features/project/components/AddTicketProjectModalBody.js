@@ -25,8 +25,8 @@ function AddTicketProjectModalBody({ closeModal, extraObject }) {
       name: '',
       id: null,
     },
-    priority: '',
-    difficulty: '',
+    priority: 'Low',
+    difficulty: 'Low',
     attachment: '',
   };
   const [loading, setLoading] = useState(false);
@@ -35,11 +35,38 @@ function AddTicketProjectModalBody({ closeModal, extraObject }) {
     INITIAL_TICKET_PROJECT_OBJ
   );
 
+  const [selectedFiles, setSelectedFiles] = useState([]);
+
+  const handleFileChange = (event) => {
+    const files = event.target.files;
+    setSelectedFiles(files);
+  };
+
   const addTicketProject = () => {
     if (ticketProjectObj.title.trim() === '')
       return setErrorMessage('Title is required!');
     else {
-      axios.post(`/api/projects/${id}/addTicket`, ticketProjectObj);
+      const formData = new FormData();
+      for (let property in ticketProjectObj) {
+        if (
+          ticketProjectObj.hasOwnProperty(property) &&
+          property !== 'assignedTo' &&
+          property !== 'attachment'
+        )
+          formData.append(property, ticketProjectObj[property]);
+      }
+      formData.append(
+        'assignedTo',
+        JSON.stringify(ticketProjectObj.assignedTo)
+      );
+
+      for (let i = 0; i < selectedFiles.length; i++) {
+        formData.append('attachment', selectedFiles[i]);
+      }
+      console.log(formData);
+
+      axios.post(`/api/projects/${id}/addTicket`, formData);
+
       dispatch(showNotification({ message: 'New Ticket Added!', status: 1 }));
       closeModal();
       navigate(`/app/projects/${id}`);
@@ -78,7 +105,10 @@ function AddTicketProjectModalBody({ closeModal, extraObject }) {
       <label className='label'>
         <span className={'label-text text-base-content '}>Assigned to</span>
       </label>
-      <UsersAutocomplete updateFormValue={updateFormValue}></UsersAutocomplete>
+      <UsersAutocomplete
+        updateFormValue={updateFormValue}
+        updateType={'assignedTo'}
+      ></UsersAutocomplete>
 
       {/* Priority */}
       <label className='label'>
@@ -116,7 +146,12 @@ function AddTicketProjectModalBody({ closeModal, extraObject }) {
       <label className='label'>
         <span className={'label-text text-base-content '}>Attachment</span>
       </label>
-      <input type='file' className='file-input file-input-bordered w-full' />
+      <input
+        type='file'
+        className='file-input file-input-bordered w-full'
+        multiple={'multiple'}
+        onChange={handleFileChange}
+      />
 
       <ErrorText styleClass='mt-16'>{errorMessage}</ErrorText>
       <div className='modal-action'>
