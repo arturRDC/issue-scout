@@ -21,6 +21,7 @@ const DocFeatures = lazy(() => import('../pages/DocFeatures'));
 const DocComponents = lazy(() => import('../pages/DocComponents'));
 const Projects = lazy(() => import('../pages/protected/Projects'));
 const Project = lazy(() => import('../pages/protected/Project'));
+const Ticket = lazy(() => import('../pages/protected/Ticket'));
 
 const routes = [
   {
@@ -38,6 +39,10 @@ const routes = [
   {
     path: '/projects',
     component: Projects,
+  },
+  {
+    path: '/tickets/:id',
+    component: Ticket,
   },
   {
     path: '/leads',

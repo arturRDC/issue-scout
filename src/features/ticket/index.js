@@ -112,7 +112,7 @@ const AddTicketButton = () => {
   );
 };
 
-function Project() {
+function Ticket() {
   const { id } = useParams();
 
   const { projects } = useSelector((state) => state.project);
@@ -129,6 +129,7 @@ function Project() {
   return (
     <>
       <div>
+        {/* Details */}
         <div role='tablist' className='tabs tabs-lifted'>
           <input
             type='radio'
@@ -151,17 +152,45 @@ function Project() {
                   </div>
                 </div>
                 <div className='divider mt-2'></div>
-                <p>{project.desc}</p>
+                <div className='grid grid-cols-2 gap-y-4'>
+                  <p className='font-semibold'>Description: </p>
+                  <p className='prose'>{project.desc}</p>
+                  <p className='font-semibold'>Priority:</p>
+                  <p>High</p>
+
+                  <p className='font-semibold'>Difficulty:</p>
+                  <p>High</p>
+                  
+                  <p className='font-semibold'>Assigned to:</p>
+                  <p>John Doe</p>
+                  
+                  <p className='font-semibold'>Submitted by:</p>
+                  <p>Jane Smith</p>
+                  
+                  <p className='font-semibold'>Status:</p>
+                  <p>Open</p>
+                  
+                  <p className='font-semibold'>Type:</p>
+                  <p>Bug</p>
+
+                  <p className='font-semibold'>Created at:</p>
+                  <p>21 May 24</p>
+                  
+                  <p className='font-semibold'>Last Updated:</p>
+                  <p>21 May 24 14:59</p>
+
+                </div>
               </div>
             </div>
           </div>
 
+          {/* Comments */}
           <input
             type='radio'
             name='my_tabs_1'
             role='tab'
             className='tab'
-            aria-label='Users'
+            aria-label='Comments'
           />
           <div
             role='tabpanel'
@@ -180,39 +209,36 @@ function Project() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div className='pt-2'>
-        <div role='tablist' className='tabs tabs-lifted'>
+
+          {/* Attachments */}
           <input
             type='radio'
-            name='my_tabs_2'
+            name='my_tabs_1'
             role='tab'
             className='tab'
-            aria-label='Tickets'
-            defaultChecked
+            aria-label='Attachments'
           />
           <div
             role='tabpanel'
             className='tab-content bg-base-100 border-base-300 rounded-box'
-          >
-            <div className='card w-full'>
-              <div className='card-body'>
-                <div className='text-xl font-semibold'>
-                  {project.name}'s tickets
-                  <div className='inline-block float-right'>
-                    {<AddTicketButton></AddTicketButton>}
-                  </div>
-                </div>
-                <div className='divider mt-2'></div>
-                <Tickets></Tickets>
-              </div>
-            </div>
-          </div>
+          ></div>
+
+          {/* History */}
+          <input
+            type='radio'
+            name='my_tabs_1'
+            role='tab'
+            className='tab'
+            aria-label='History'
+          />
+          <div
+            role='tabpanel'
+            className='tab-content bg-base-100 border-base-300 rounded-box'
+          ></div>
         </div>
       </div>
     </>
   );
 }
 
-export default Project;
+export default Ticket;
