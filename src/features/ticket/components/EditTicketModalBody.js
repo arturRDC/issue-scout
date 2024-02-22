@@ -122,6 +122,23 @@ function EditTicketModalBody({ closeModal, extraObject }) {
         defaultValue={ticketObj.assignedTo.name}
       ></UsersAutocomplete>
 
+      {/* Type */}
+      <label className='label'>
+        <span className={'label-text text-base-content '}>Type</span>
+      </label>
+      <select
+        className='select select-bordered w-full'
+        defaultValue={ticketObj.type}
+        onChange={(e) =>
+          updateFormValue({ updateType: 'type', value: e.target.value })
+        }
+      >
+        <option value={'Bug'}>Bug</option>
+        <option value={'Feature'}>Feature</option>
+        <option value={'Request'}>Request</option>
+        <option value={'Comment'}>Comment</option>
+      </select>
+
       {/* Priority */}
       <label className='label'>
         <span className={'label-text text-base-content '}>Priority</span>
