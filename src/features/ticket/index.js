@@ -15,6 +15,7 @@ import Team from './components/Team';
 import Tickets from './components/Tickets';
 import axios from 'axios';
 
+
 const TopSideButtons = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -125,13 +126,33 @@ function Ticket() {
     axios
       .get(`/api/tickets/${id}`)
       .then((response) => {
-        setTicketObj(response.data);
+        setTicketObj(response.data.details);
+        setCommentsArr(response.data.comments);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
   }, []);
   const [ticketObj, setTicketObj] = useState(null);
+  const [commentsArr, setCommentsArr] = useState(null);
+  const [inputComment, setInputComment] = useState('');
+
+  const handleInputCommentChange = (e) => {
+    setInputComment(e.target.value);
+  };
+
+  const handleNewComment = () => {
+    const content = inputComment;
+    if (content.trim() === '') return;
+    const dt = moment().format('DD MMM YY HH:mm');
+    setCommentsArr([
+      ...commentsArr,
+      { author: 'John Smith', content: content, createdAt: dt },
+    ]);
+    axios.post(`/api/tickets/${id}/comments`, { author: 'John Smith', content: content, createdAt: dt });
+    setInputComment('');
+  };
+
   if (!project) {
     return <div>Loading...</div>;
   }
@@ -210,58 +231,39 @@ function Ticket() {
           >
             <div className='card w-full h-96 overflow-y-auto'>
               <div className='card-body'>
-                {/* <div className='text-xl font-semibold'>
-                  {project.name}'s comments
-                                    
-                  <div className='inline-block float-right'>
-                    {<AddUserButton></AddUserButton>}
-                  </div>
-                </div>
-
-                <div className='divider mt-2'></div> */}
-                <div className='chat chat-start'>
-                  <div className='chat-header'>
-                    Obi-Wan Kenobi
-                    <time className='text-xs opacity-50'> 21 May 24 16:59</time>
-                  </div>
-                  <div className='chat-bubble chat-bubble-primary'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Etiam maximus dictum neque sed sagittis. Curabitur nec
-                    dignissim arcu, id fringilla massa. Duis blandit justo ut
-                    ipsum rutrum cursus. Curabitur pulvinar libero interdum
-                    tellus semper, ut ultricies nisi interdum. Aenean porttitor
-                    nibh risus, in suscipit nunc tincidunt et. Suspendisse
-                    elementum posuere lacus, sed semper diam rutrum eu. Nulla
-                    aliquam auctor venenatis. Aliquam sit amet tellus viverra,
-                    porttitor magna sit amet, tempus diam. Praesent egestas,
-                    arcu tincidunt euismod sollicitudin, nisi lorem blandit
-                    mauris, sodales porta ex dolor vitae lacus. In ac lacinia
-                    elit. Nulla sapien velit, varius id sem sit amet, ultrices
-                    consectetur augue. Nam eget mattis neque. Vivamus euismod
-                    eros mauris, id placerat elit suscipit at. Aenean efficitur
-                    est sit amet eleifend tempor. Donec gravida efficitur neque,
-                    mollis malesuada mauris tempus ut.
-                  </div>
-                </div>
-                <div className='chat chat-start'>
-                  <div className='chat-header'>
-                    Obi-Wan Kenobi
-                    <time className='text-xs opacity-50'> 21 May 24 16:59</time>
-                  </div>
-                  <div className='chat-bubble chat-bubble-primary'>
-                    I loved you.
-                  </div>
-                </div>
+                {commentsArr.map((c, k) => {
+                  return (
+                    <div className='chat chat-start' key={k}>
+                      <div className='chat-header'>
+                        {c.author}
+                        <time className='text-xs opacity-50'>
+                          {' '}
+                          {c.createdAt}
+                        </time>
+                      </div>
+                      <div className='chat-bubble chat-bubble-primary'>
+                        {c.content}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
             <div className='flex items-center p-3 gap-2'>
               <input
                 type='text'
                 placeholder='Type comment'
-                class='input input-bordered w-full'
+                className='input input-bordered w-full'
+                value={inputComment}
+                onChange={handleInputCommentChange}
               />
 
-              <PaperAirplaneIcon height={36} color={'#244bfe'}></PaperAirplaneIcon>
+              <button onClick={handleNewComment}>
+                <PaperAirplaneIcon
+                  height={36}
+                  color={'#244bfe'}
+                ></PaperAirplaneIcon>
+              </button>
             </div>
           </div>
 

@@ -18,7 +18,7 @@ function EditTicketModalBody({ closeModal, extraObject }) {
     axios
       .get(`/api/tickets/${id}`)
       .then((response) => {
-        setTicketObj(response.data);
+        setTicketObj(response.data.details);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
