@@ -348,7 +348,10 @@ function Ticket() {
               ) : (
                 historyArr.map((h, k) => {
                   return (
-                    <div className='card w-fit bg-base-100 border-base-300 card-bordered p-2'>
+                    <div
+                      key={k}
+                      className='card w-fit bg-base-100 border-base-300 card-bordered p-2'
+                    >
                       <div className='flex gap-1 items-center'>
                         <FaClockRotateLeft className='m-2' />
                         At <span className='font-medium'>{h.updatedAt}</span>
