@@ -176,7 +176,7 @@ function Project() {
                   </div>
                 </div>
                 <div className='divider mt-2'></div>
-                <Team></Team>
+                <Team id={id}></Team>
               </div>
             </div>
           </div>

@@ -48,12 +48,12 @@ function RoleSelect({ role, userId }) {
   );
 }
 
-function Team() {
+function Team({id}) {
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
     async function fetchUsers() {
-      const res = await axios.get('/api/users', {});
+      const res = await axios.get(`/api/projects/${id}/users`, {});
       const users = res.data.data;
       setMembers(users);
     }
