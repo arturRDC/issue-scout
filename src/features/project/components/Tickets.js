@@ -9,7 +9,7 @@ import { parse, formatDistanceToNow } from 'date-fns';
 
 
 function Tickets() {
-  const [members, setMembers] = useState([]);
+  const [tickets, setTickets] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -17,7 +17,7 @@ function Tickets() {
     async function fetchTickets() {
       const res = await axios.get(`/api/projects/${id}/tickets`, {});
       const tickets = res.data.data;
-      setMembers(tickets);
+      setTickets(tickets);
     }
     fetchTickets();
   }, []);
@@ -52,7 +52,7 @@ function Tickets() {
             </tr>
           </thead>
           <tbody>
-            {members.map((l, k) => {
+            {tickets.map((l, k) => {
               return (
                 <tr
                   key={k}
