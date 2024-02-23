@@ -66,15 +66,14 @@ function EditTicketModalBody({ closeModal, extraObject }) {
       for (let property in ticketObj) {
         if (
           ticketObj.hasOwnProperty(property) &&
-          property !== 'assignedTo' &&
-          property !== 'attachment'
+          property !== 'assignedTo'
         )
           formData.append(property, ticketObj[property]);
       }
       formData.append('assignedTo', JSON.stringify(ticketObj.assignedTo));
 
       for (let i = 0; i < selectedFiles.length; i++) {
-        formData.append('attachment', selectedFiles[i]);
+        formData.append('attachments', selectedFiles[i]);
       }
       console.log(formData);
 

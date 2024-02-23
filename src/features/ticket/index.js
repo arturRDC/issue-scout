@@ -9,12 +9,13 @@ import {
   MODAL_BODY_TYPES,
 } from '../../utils/globalConstantUtil';
 import PaperAirplaneIcon from '@heroicons/react/24/solid/PaperAirplaneIcon';
+import XMarkIcon from '@heroicons/react/24/solid/XMarkIcon';
+import PaperClipIcon from '@heroicons/react/24/solid/PaperClipIcon';
 import { showNotification } from '../common/headerSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import Team from './components/Team';
 import Tickets from './components/Tickets';
 import axios from 'axios';
-
 
 const TopSideButtons = () => {
   const dispatch = useDispatch();
@@ -128,6 +129,7 @@ function Ticket() {
       .then((response) => {
         setTicketObj(response.data.details);
         setCommentsArr(response.data.comments);
+        setAttachmentsArr(response.data.attachments);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -135,6 +137,7 @@ function Ticket() {
   }, []);
   const [ticketObj, setTicketObj] = useState(null);
   const [commentsArr, setCommentsArr] = useState(null);
+  const [attachmentsArr, setAttachmentsArr] = useState(null);
   const [inputComment, setInputComment] = useState('');
 
   const handleInputCommentChange = (e) => {
@@ -149,8 +152,21 @@ function Ticket() {
       ...commentsArr,
       { author: 'John Smith', content: content, createdAt: dt },
     ]);
-    axios.post(`/api/tickets/${id}/comments`, { author: 'John Smith', content: content, createdAt: dt });
+    axios.post(`/api/tickets/${id}/comments`, {
+      author: 'John Smith',
+      content: content,
+      createdAt: dt,
+    });
     setInputComment('');
+  };
+
+  const handleDeleteAttachment = (attId) => {
+    axios.delete(`/api/tickets/${id}/attachments/${attId}`);
+    setAttachmentsArr(
+      attachmentsArr.filter((att) => {
+        return att.id !== attId;
+      })
+    );
   };
 
   if (!project) {
@@ -278,7 +294,35 @@ function Ticket() {
           <div
             role='tabpanel'
             className='tab-content bg-base-100 border-base-300 rounded-box'
-          ></div>
+          >
+            <div className='card w-fit bg-base-100'>
+              <div className='card-body'>
+                <h2 className='card-title'>Ticket Files</h2>
+                {(attachmentsArr === null || attachmentsArr.length === 0) ? <h1>No Attachments</h1> : 
+                attachmentsArr.map((att, k) => {
+                  return (
+                    <div
+                      key={k}
+                      className='card w-fit bg-base-100 border-base-300 card-bordered p-2'
+                    >
+                      <div className='flex gap-2'>
+                        <PaperClipIcon width={24}></PaperClipIcon>
+                        <a className='link link-hover' href={att.address}>
+                          {att.name}
+                        </a>
+                        <div className='cursor-pointer'>
+                          <XMarkIcon
+                            width={24}
+                            onClick={() => handleDeleteAttachment(att.id)}
+                          ></XMarkIcon>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
 
           {/* History */}
           <input
