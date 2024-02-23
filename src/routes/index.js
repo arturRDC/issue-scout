@@ -22,6 +22,7 @@ const DocComponents = lazy(() => import('../pages/DocComponents'));
 const Projects = lazy(() => import('../pages/protected/Projects'));
 const Project = lazy(() => import('../pages/protected/Project'));
 const Ticket = lazy(() => import('../pages/protected/Ticket'));
+const Tickets = lazy(() => import('../pages/protected/Tickets'));
 const Users = lazy(() => import('../pages/protected/Users'));
 
 const routes = [
@@ -44,6 +45,10 @@ const routes = [
   {
     path: '/tickets/:id',
     component: Ticket,
+  },
+  {
+    path: '/tickets',
+    component: Tickets,
   },
   {
     path: '/users',

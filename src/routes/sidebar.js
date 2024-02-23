@@ -40,7 +40,7 @@ const routes = [
     name: 'Users',
   },
   {
-    path: '/app/charts',
+    path: '/app/tickets',
     icon: <QueueListIcon className={iconClasses} />,
     name: 'My Tickets',
   },
