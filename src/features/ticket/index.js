@@ -8,7 +8,7 @@ import {
   CONFIRMATION_MODAL_CLOSE_TYPES,
   MODAL_BODY_TYPES,
 } from '../../utils/globalConstantUtil';
-import TrashIcon from '@heroicons/react/24/outline/TrashIcon';
+import PaperAirplaneIcon from '@heroicons/react/24/solid/PaperAirplaneIcon';
 import { showNotification } from '../common/headerSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import Team from './components/Team';
@@ -208,17 +208,60 @@ function Ticket() {
             role='tabpanel'
             className='tab-content bg-base-100 border-base-300 rounded-box'
           >
-            <div className='card w-full'>
+            <div className='card w-full h-96 overflow-y-auto'>
               <div className='card-body'>
-                <div className='text-xl font-semibold'>
-                  {project.name}'s users
+                {/* <div className='text-xl font-semibold'>
+                  {project.name}'s comments
+                                    
                   <div className='inline-block float-right'>
                     {<AddUserButton></AddUserButton>}
                   </div>
                 </div>
-                <div className='divider mt-2'></div>
-                <Team></Team>
+
+                <div className='divider mt-2'></div> */}
+                <div className='chat chat-start'>
+                  <div className='chat-header'>
+                    Obi-Wan Kenobi
+                    <time className='text-xs opacity-50'> 21 May 24 16:59</time>
+                  </div>
+                  <div className='chat-bubble chat-bubble-primary'>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Etiam maximus dictum neque sed sagittis. Curabitur nec
+                    dignissim arcu, id fringilla massa. Duis blandit justo ut
+                    ipsum rutrum cursus. Curabitur pulvinar libero interdum
+                    tellus semper, ut ultricies nisi interdum. Aenean porttitor
+                    nibh risus, in suscipit nunc tincidunt et. Suspendisse
+                    elementum posuere lacus, sed semper diam rutrum eu. Nulla
+                    aliquam auctor venenatis. Aliquam sit amet tellus viverra,
+                    porttitor magna sit amet, tempus diam. Praesent egestas,
+                    arcu tincidunt euismod sollicitudin, nisi lorem blandit
+                    mauris, sodales porta ex dolor vitae lacus. In ac lacinia
+                    elit. Nulla sapien velit, varius id sem sit amet, ultrices
+                    consectetur augue. Nam eget mattis neque. Vivamus euismod
+                    eros mauris, id placerat elit suscipit at. Aenean efficitur
+                    est sit amet eleifend tempor. Donec gravida efficitur neque,
+                    mollis malesuada mauris tempus ut.
+                  </div>
+                </div>
+                <div className='chat chat-start'>
+                  <div className='chat-header'>
+                    Obi-Wan Kenobi
+                    <time className='text-xs opacity-50'> 21 May 24 16:59</time>
+                  </div>
+                  <div className='chat-bubble chat-bubble-primary'>
+                    I loved you.
+                  </div>
+                </div>
               </div>
+            </div>
+            <div className='flex items-center p-3 gap-2'>
+              <input
+                type='text'
+                placeholder='Type comment'
+                class='input input-bordered w-full'
+              />
+
+              <PaperAirplaneIcon height={36} color={'#244bfe'}></PaperAirplaneIcon>
             </div>
           </div>
 
