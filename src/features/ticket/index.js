@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TitleCard from '../../components/Cards/TitleCard';
 import { openModal } from '../common/modalSlice';
@@ -13,6 +13,7 @@ import { showNotification } from '../common/headerSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import Team from './components/Team';
 import Tickets from './components/Tickets';
+import axios from 'axios';
 
 const TopSideButtons = () => {
   const dispatch = useDispatch();
@@ -121,12 +122,20 @@ function Ticket() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProjectsContent());
+    axios
+      .get(`/api/tickets/${id}`)
+      .then((response) => {
+        setTicketObj(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
   }, []);
+  const [ticketObj, setTicketObj] = useState(null);
   if (!project) {
     return <div>Loading...</div>;
   }
-  return (
+  return ticketObj !== null ? (
     <>
       <div>
         {/* Details */}
@@ -146,44 +155,42 @@ function Ticket() {
             <div className='card w-full'>
               <div className='card-body'>
                 <div className='text-xl font-semibold'>
-                  {project.name}
+                  {ticketObj.title}
                   <div className='inline-block float-right'>
                     {<TopSideButtons></TopSideButtons>}
                   </div>
                 </div>
                 <div className='divider mt-2'></div>
                 <div className='grid grid-cols-2 gap-y-4'>
-                  
                   <p className='font-semibold'>Id: </p>
-                  <p className='prose'>2</p>
+                  <p className='prose'>{ticketObj.id}</p>
 
                   <p className='font-semibold'>Description: </p>
-                  <p className='prose'>{project.desc}</p>
+                  <p className='prose'>{ticketObj.desc}</p>
 
                   <p className='font-semibold'>Priority:</p>
-                  <p>High</p>
+                  <p>{ticketObj.priority}</p>
 
                   <p className='font-semibold'>Difficulty:</p>
-                  <p>High</p>
-                  
+                  <p>{ticketObj.difficulty}</p>
+
                   <p className='font-semibold'>Assigned to:</p>
-                  <p>John Doe</p>
-                  
+                  <p>{ticketObj.assignedTo.name}</p>
+
                   <p className='font-semibold'>Submitted by:</p>
-                  <p>Jane Smith</p>
-                  
+                  <p>{ticketObj.submittedBy}</p>
+
                   <p className='font-semibold'>Status:</p>
-                  <p>Open</p>
-                  
+                  <p>{ticketObj.status}</p>
+
                   <p className='font-semibold'>Type:</p>
-                  <p>Bug</p>
+                  <p>{ticketObj.type}</p>
 
                   <p className='font-semibold'>Created at:</p>
-                  <p>21 May 24</p>
-                  
-                  <p className='font-semibold'>Last Updated:</p>
-                  <p>21 May 24 14:59</p>
+                  <p>{ticketObj.createdAt}</p>
 
+                  <p className='font-semibold'>Last Updated:</p>
+                  <p>{ticketObj.updatedAt}</p>
                 </div>
               </div>
             </div>
@@ -243,6 +250,8 @@ function Ticket() {
         </div>
       </div>
     </>
+  ) : (
+    <></>
   );
 }
 
