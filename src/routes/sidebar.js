@@ -35,7 +35,7 @@ const routes = [
     name: 'Projects',
   },
   {
-    path: '/app/transactions',
+    path: '/app/users',
     icon: <UsersIcon className={iconClasses} />,
     name: 'Users',
   },
