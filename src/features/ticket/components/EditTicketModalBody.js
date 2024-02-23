@@ -139,6 +139,23 @@ function EditTicketModalBody({ closeModal, extraObject }) {
         <option value={'Comment'}>Comment</option>
       </select>
 
+      {/* Status */}
+      <label className='label'>
+        <span className={'label-text text-base-content '}>Status</span>
+      </label>
+      <select
+        className='select select-bordered w-full'
+        defaultValue={ticketObj.status}
+        onChange={(e) =>
+          updateFormValue({ updateType: 'status', value: e.target.value })
+        }
+      >
+        <option value={'Open'}>Open</option>
+        <option value={'In-Progress'}>In-Progress</option>
+        <option value={'Resolved'}>Resolved</option>
+        <option value={'Closed'}>Closed</option>
+      </select>
+
       {/* Priority */}
       <label className='label'>
         <span className={'label-text text-base-content '}>Priority</span>
