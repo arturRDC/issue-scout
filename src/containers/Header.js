@@ -33,14 +33,14 @@ function Header() {
   }, []);
 
   // Opening right sidebar for notification
-  const openNotification = () => {
-    dispatch(
-      openRightDrawer({
-        header: 'Notifications',
-        bodyType: RIGHT_DRAWER_TYPES.NOTIFICATION,
-      })
-    );
-  };
+  // const openNotification = () => {
+  //   dispatch(
+  //     openRightDrawer({
+  //       header: 'Notifications',
+  //       bodyType: RIGHT_DRAWER_TYPES.NOTIFICATION,
+  //     })
+  //   );
+  // };
 
   function logoutUser() {
     localStorage.clear();
@@ -98,7 +98,7 @@ function Header() {
             />
           </label>
 
-          {/* Notification icon */}
+          {/* Notification icon
           <button
             className='btn btn-ghost ml-4  btn-circle'
             onClick={() => openNotification()}
@@ -111,13 +111,15 @@ function Header() {
                 </span>
               ) : null}
             </div>
-          </button>
+          </button> */}
 
           {/* Profile icon, opening menu on click */}
           <div className='dropdown dropdown-end ml-4'>
             <label tabIndex={0} className='btn btn-ghost btn-circle avatar'>
-              <div className='w-10 rounded-full'>
-                <img src='https://placeimg.com/80/80/people' alt='profile' />
+              <div className='avatar placeholder'>
+                <div className='bg-secondary text-neutral-content rounded-full w-8'>
+                  <span className='text-sm'>A</span>
+                </div>
               </div>
             </label>
             <ul
@@ -125,13 +127,7 @@ function Header() {
               className='menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52'
             >
               <li className='justify-between'>
-                <Link to={'/app/settings-profile'}>
-                  Profile Settings
-                  <span className='badge'>New</span>
-                </Link>
-              </li>
-              <li className=''>
-                <Link to={'/app/settings-billing'}>Bill History</Link>
+                <Link to={'/app/settings-profile'}>Profile Settings</Link>
               </li>
               <div className='divider mt-0 mb-0'></div>
               <li>

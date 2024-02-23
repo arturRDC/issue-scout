@@ -24,11 +24,11 @@ const iconClasses = `h-6 w-6`;
 const submenuIconClasses = `h-5 w-5`;
 
 const routes = [
-  {
-    path: '/app/dashboard',
-    icon: <Squares2X2Icon className={iconClasses} />,
-    name: 'Dashboard',
-  },
+  // {
+  //   path: '/app/dashboard',
+  //   icon: <Squares2X2Icon className={iconClasses} />,
+  //   name: 'Dashboard',
+  // },
   {
     path: '/app/projects',
     icon: <InboxArrowDownIcon className={iconClasses} />,
@@ -45,21 +45,9 @@ const routes = [
     name: 'My Tickets',
   },
   {
-    path: '',
-    icon: <Cog6ToothIcon className={`${iconClasses} inline`} />,
-    name: 'Settings',
-    submenu: [
-      {
-        path: '/app/settings-profile', //url
-        icon: <UserIcon className={submenuIconClasses} />,
-        name: 'Profile',
-      },
-      {
-        path: '/app/settings-notifications',
-        icon: <BellIcon className={submenuIconClasses} />,
-        name: 'Notifications',
-      },
-    ],
+    path: '/app/settings-profile', //url
+    icon: <UserIcon className={iconClasses} />,
+    name: 'Profile',
   },
   // {
   //   path: '/app/integration',
