@@ -16,6 +16,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Team from './components/Team';
 import Tickets from './components/Tickets';
 import axios from 'axios';
+import { FaClockRotateLeft } from 'react-icons/fa6';
 
 const TopSideButtons = () => {
   const dispatch = useDispatch();
@@ -130,6 +131,7 @@ function Ticket() {
         setTicketObj(response.data.details);
         setCommentsArr(response.data.comments);
         setAttachmentsArr(response.data.attachments);
+        setHistoryArr(response.data.history);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -138,6 +140,7 @@ function Ticket() {
   const [ticketObj, setTicketObj] = useState(null);
   const [commentsArr, setCommentsArr] = useState(null);
   const [attachmentsArr, setAttachmentsArr] = useState(null);
+  const [historyArr, setHistoryArr] = useState(null);
   const [inputComment, setInputComment] = useState('');
 
   const handleInputCommentChange = (e) => {
@@ -298,28 +301,31 @@ function Ticket() {
             <div className='card w-fit bg-base-100'>
               <div className='card-body'>
                 <h2 className='card-title'>Ticket Files</h2>
-                {(attachmentsArr === null || attachmentsArr.length === 0) ? <h1>No Attachments</h1> : 
-                attachmentsArr.map((att, k) => {
-                  return (
-                    <div
-                      key={k}
-                      className='card w-fit bg-base-100 border-base-300 card-bordered p-2'
-                    >
-                      <div className='flex gap-2'>
-                        <PaperClipIcon width={24}></PaperClipIcon>
-                        <a className='link link-hover' href={att.address}>
-                          {att.name}
-                        </a>
-                        <div className='cursor-pointer'>
-                          <XMarkIcon
-                            width={24}
-                            onClick={() => handleDeleteAttachment(att.id)}
-                          ></XMarkIcon>
+                {attachmentsArr === null || attachmentsArr.length === 0 ? (
+                  <h1>No Attachments</h1>
+                ) : (
+                  attachmentsArr.map((att, k) => {
+                    return (
+                      <div
+                        key={k}
+                        className='card w-fit bg-base-100 border-base-300 card-bordered p-2'
+                      >
+                        <div className='flex gap-2'>
+                          <PaperClipIcon width={24}></PaperClipIcon>
+                          <a className='link link-hover' href={att.address}>
+                            {att.name}
+                          </a>
+                          <div className='cursor-pointer'>
+                            <XMarkIcon
+                              width={24}
+                              onClick={() => handleDeleteAttachment(att.id)}
+                            ></XMarkIcon>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })
+                )}
               </div>
             </div>
           </div>
@@ -335,7 +341,40 @@ function Ticket() {
           <div
             role='tabpanel'
             className='tab-content bg-base-100 border-base-300 rounded-box'
-          ></div>
+          >
+            <div className='flex flex-col m-3 gap-2'>
+              {historyArr === null || historyArr.length === 0 ? (
+                <h1>No Changes</h1>
+              ) : (
+                historyArr.map((h, k) => {
+                  return (
+                    <div className='card w-fit bg-base-100 border-base-300 card-bordered p-2'>
+                      <div className='flex gap-1 items-center'>
+                        <FaClockRotateLeft className='m-2' />
+                        At <span className='font-medium'>{h.updatedAt}</span>
+                        {', changed '}
+                        <span className='font-medium'>{h.propertyChanged}</span>
+                        {' from '}
+                        <div
+                          className='tooltip tooltip-bottom'
+                          data-tip={h.oldValue}
+                        >
+                          {h.oldValue.substring(0, 30) + '...'}
+                        </div>
+                        {' to '}
+                        <div
+                          className='tooltip tooltip-bottom'
+                          data-tip={h.newValue}
+                        >
+                          {h.newValue.substring(0, 30) + '...'}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </>
