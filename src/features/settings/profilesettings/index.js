@@ -11,13 +11,22 @@ import axios from 'axios';
 function ProfileSettings() {
   const dispatch = useDispatch();
 
-  let initialProfileObj = {
-    name: 'Alex',
-    email: 'alex@issuescout.com',
-    password: '',
-    repeatPassword: '',
-    profilePicture: '',
-  };
+  let initialProfileObj = null;
+
+  useEffect(() => {
+    axios
+      .get('/api/auth/me')
+      .then((res) =>
+        setProfileObj({
+          name: res.data.username,
+          email: res.data.email,
+          password: '',
+          repeatPassword: '',
+          profilePicture: '',
+        })
+      )
+      .catch(() => console.error('error fetching data'));
+  }, []);
 
   const [profileObj, setProfileObj] = useState(initialProfileObj);
   // Call API to update profile settings changes
@@ -50,7 +59,7 @@ function ProfileSettings() {
     setProfileObj({ ...profileObj, [updateType]: value });
   };
 
-  return (
+  return profileObj !== null ? (
     <>
       <TitleCard title='Profile Settings' topMargin='mt-2'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
@@ -109,6 +118,8 @@ function ProfileSettings() {
         </div>
       </TitleCard>
     </>
+  ) : (
+    <></>
   );
 }
 
