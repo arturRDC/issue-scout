@@ -1,21 +1,22 @@
 import { themeChange } from 'theme-change';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import BellIcon from '@heroicons/react/24/outline/BellIcon';
 import Bars3Icon from '@heroicons/react/24/outline/Bars3Icon';
 import MoonIcon from '@heroicons/react/24/outline/MoonIcon';
 import SunIcon from '@heroicons/react/24/outline/SunIcon';
-import { openRightDrawer } from '../features/common/rightDrawerSlice';
-import { RIGHT_DRAWER_TYPES } from '../utils/globalConstantUtil';
+import axios from 'axios';
 
 import { NavLink, Routes, Link, useLocation } from 'react-router-dom';
 
 function Header() {
-  const dispatch = useDispatch();
-  const { noOfNotifications, pageTitle } = useSelector((state) => state.header);
+  const { pageTitle } = useSelector((state) => state.header);
   const [currentTheme, setCurrentTheme] = useState(
     localStorage.getItem('theme')
   );
+  const [profileObj, setProfileObj] = useState({
+    name: 'A',
+    profilePicture: '',
+  });
 
   useEffect(() => {
     themeChange(false);
@@ -29,18 +30,16 @@ function Header() {
         setCurrentTheme('lighttheme');
       }
     }
-    // 👆 false parameter is required for react project
+    axios
+      .get('/api/auth/me')
+      .then((res) =>
+        setProfileObj({
+          name: res.data.username,
+          profilePicture: res.data.profilePicture,
+        })
+      )
+      .catch(() => console.error('error fetching data'));
   }, []);
-
-  // Opening right sidebar for notification
-  // const openNotification = () => {
-  //   dispatch(
-  //     openRightDrawer({
-  //       header: 'Notifications',
-  //       bodyType: RIGHT_DRAWER_TYPES.NOTIFICATION,
-  //     })
-  //   );
-  // };
 
   function logoutUser() {
     localStorage.clear();
@@ -48,8 +47,6 @@ function Header() {
   }
 
   return (
-    // navbar fixed  flex-none justify-between bg-base-300  z-10 shadow-md
-
     <>
       <div className='navbar sticky top-0 bg-base-100  z-10 shadow-md '>
         {/* Menu toogle for mobile view or small screen */}
@@ -98,29 +95,21 @@ function Header() {
             />
           </label>
 
-          {/* Notification icon
-          <button
-            className='btn btn-ghost ml-4  btn-circle'
-            onClick={() => openNotification()}
-          >
-            <div className='indicator'>
-              <BellIcon className='h-6 w-6' />
-              {noOfNotifications > 0 ? (
-                <span className='indicator-item badge badge-primary badge-sm'>
-                  {noOfNotifications}
-                </span>
-              ) : null}
-            </div>
-          </button> */}
-
           {/* Profile icon, opening menu on click */}
+
           <div className='dropdown dropdown-end ml-4'>
             <label tabIndex={0} className='btn btn-ghost btn-circle avatar'>
-              <div className='avatar placeholder'>
-                <div className='bg-secondary text-neutral-content rounded-full w-8'>
-                  <span className='text-sm'>A</span>
+              {profileObj.profilePicture !== '' ? (
+                <img src={profileObj.profilePicture} alt='Avatar' />
+              ) : (
+                <div className='avatar placeholder'>
+                  <div className='bg-secondary text-neutral-content rounded-full w-8'>
+                    <span className='text-sm'>
+                      {profileObj.name.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              )}
             </label>
             <ul
               tabIndex={0}
