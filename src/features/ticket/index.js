@@ -1,9 +1,7 @@
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import TitleCard from '../../components/Cards/TitleCard';
 import { openModal } from '../common/modalSlice';
-import { deleteProject, getProjectsContent } from '../projects/projectSlice';
 import {
   CONFIRMATION_MODAL_CLOSE_TYPES,
   MODAL_BODY_TYPES,
@@ -11,10 +9,7 @@ import {
 import PaperAirplaneIcon from '@heroicons/react/24/solid/PaperAirplaneIcon';
 import XMarkIcon from '@heroicons/react/24/solid/XMarkIcon';
 import PaperClipIcon from '@heroicons/react/24/solid/PaperClipIcon';
-import { showNotification } from '../common/headerSlice';
-import { useNavigate, useParams } from 'react-router-dom';
-import Team from './components/Team';
-import Tickets from './components/Tickets';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaClockRotateLeft } from 'react-icons/fa6';
 
@@ -64,63 +59,13 @@ const TopSideButtons = () => {
   );
 };
 
-const AddUserButton = () => {
-  const dispatch = useDispatch();
-  const { id } = useParams();
-
-  const openAddUserProjectModal = () => {
-    dispatch(
-      openModal({
-        title: 'Add User',
-        bodyType: MODAL_BODY_TYPES.PROJECT_ADD_USER,
-        extraObject: id,
-      })
-    );
-  };
-
-  return (
-    <div className='inline-block float-right flex gap-2'>
-      <button
-        className='btn px-6 btn-sm normal-case btn-primary'
-        onClick={() => openAddUserProjectModal()}
-      >
-        Add User
-      </button>
-    </div>
-  );
-};
-
-const AddTicketButton = () => {
-  const dispatch = useDispatch();
-  const { id } = useParams();
-
-  const openAddTicketProjectModal = () => {
-    dispatch(
-      openModal({
-        title: 'Add Ticket',
-        bodyType: MODAL_BODY_TYPES.PROJECT_ADD_TICKET,
-        extraObject: id,
-      })
-    );
-  };
-
-  return (
-    <div className='inline-block float-right flex gap-2'>
-      <button
-        className='btn px-6 btn-sm normal-case btn-primary'
-        onClick={() => openAddTicketProjectModal()}
-      >
-        Add Ticket
-      </button>
-    </div>
-  );
-};
-
 function Ticket() {
   const { id } = useParams();
 
   const { projects } = useSelector((state) => state.project);
   const project = projects[id - 1];
+  const [role, setRole] = useState('');
+  const [name, setName] = useState('');
 
   const dispatch = useDispatch();
 
@@ -132,6 +77,12 @@ function Ticket() {
         setCommentsArr(response.data.comments);
         setAttachmentsArr(response.data.attachments);
         setHistoryArr(response.data.history);
+      })
+      .then(() => {
+        axios.get('/api/auth/me').then((res) => {
+          setRole(res.data.authorities[0].authority);
+          setName(res.data.name);
+        });
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -153,10 +104,14 @@ function Ticket() {
     const dt = moment().format('DD MMM YY HH:mm');
     setCommentsArr([
       ...commentsArr,
-      { author: 'John Smith', content: content, createdAt: dt },
+      {
+        author: name.charAt(0).toUpperCase() + name.substring(1),
+        content: content,
+        createdAt: dt,
+      },
     ]);
     axios.post(`/api/tickets/${id}/comments`, {
-      author: 'John Smith',
+      author: name.charAt(0).toUpperCase() + name.substring(1),
       content: content,
       createdAt: dt,
     });
@@ -196,9 +151,14 @@ function Ticket() {
               <div className='card-body'>
                 <div className='text-xl font-semibold'>
                   {ticketObj.title}
-                  <div className='inline-block float-right'>
-                    {<TopSideButtons></TopSideButtons>}
-                  </div>
+
+                  {role !== 'ROLE_SUBMITTER' ? (
+                    <div className='inline-block float-right'>
+                      {<TopSideButtons></TopSideButtons>}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div className='divider mt-2'></div>
                 <div className='grid grid-cols-2 gap-y-4'>

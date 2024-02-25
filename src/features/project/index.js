@@ -1,18 +1,15 @@
-import moment from 'moment';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import TitleCard from '../../components/Cards/TitleCard';
 import { openModal } from '../common/modalSlice';
-import { deleteProject, getProjectsContent } from '../projects/projectSlice';
+import { getProjectsContent } from '../projects/projectSlice';
 import {
   CONFIRMATION_MODAL_CLOSE_TYPES,
   MODAL_BODY_TYPES,
 } from '../../utils/globalConstantUtil';
-import TrashIcon from '@heroicons/react/24/outline/TrashIcon';
-import { showNotification } from '../common/headerSlice';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Team from './components/Team';
 import Tickets from './components/Tickets';
+import axios from 'axios';
 
 const TopSideButtons = () => {
   const dispatch = useDispatch();
@@ -117,11 +114,17 @@ function Project() {
 
   const { projects } = useSelector((state) => state.project);
   const project = projects[id - 1];
-
+  const [role, setRole] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getProjectsContent());
+    axios
+      .get('/api/auth/me')
+      .then((res) => {
+        setRole(res.data.authorities[0].authority);
+      })
+      .catch(() => console.error('error fetching data'));
   }, []);
   if (!project) {
     return <div>Loading...</div>;
@@ -146,9 +149,13 @@ function Project() {
               <div className='card-body'>
                 <div className='text-xl font-semibold'>
                   {project.name}
-                  <div className='inline-block float-right'>
-                    {<TopSideButtons></TopSideButtons>}
-                  </div>
+                  {role === 'ROLE_MANAGER' || role === 'ROLE_ADMIN' ? (
+                    <div className='inline-block float-right'>
+                      {<TopSideButtons></TopSideButtons>}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div className='divider mt-2'></div>
                 <p>{project.desc}</p>
@@ -171,12 +178,16 @@ function Project() {
               <div className='card-body'>
                 <div className='text-xl font-semibold'>
                   {project.name}'s users
-                  <div className='inline-block float-right'>
-                    {<AddUserButton></AddUserButton>}
-                  </div>
+                  {role === 'ROLE_MANAGER' || role === 'ROLE_ADMIN' ? (
+                    <div className='inline-block float-right'>
+                      {<AddUserButton></AddUserButton>}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div className='divider mt-2'></div>
-                <Team id={id}></Team>
+                <Team id={id} role={role}></Team>
               </div>
             </div>
           </div>

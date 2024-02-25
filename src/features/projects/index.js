@@ -1,16 +1,12 @@
-import moment from 'moment';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TitleCard from '../../components/Cards/TitleCard';
 import { openModal } from '../common/modalSlice';
-import { deleteProject, getProjectsContent } from './projectSlice';
-import {
-  CONFIRMATION_MODAL_CLOSE_TYPES,
-  MODAL_BODY_TYPES,
-} from '../../utils/globalConstantUtil';
-import { showNotification } from '../common/headerSlice';
+import { getProjectsContent } from './projectSlice';
+import { MODAL_BODY_TYPES } from '../../utils/globalConstantUtil';
 import { useNavigate } from 'react-router-dom';
 import { parse, formatDistanceToNow } from 'date-fns';
+import axios from 'axios';
 
 const TopSideButtons = () => {
   const dispatch = useDispatch();
@@ -46,8 +42,12 @@ function Projects() {
     navigate(`/app/projects/${id}`);
   };
 
+  const [role, setRole] = useState('');
   useEffect(() => {
     dispatch(getProjectsContent());
+    axios.get('/api/auth/me').then((res) => {
+      setRole(res.data.authorities[0].authority);
+    });
   }, []);
 
   return (
@@ -55,7 +55,13 @@ function Projects() {
       <TitleCard
         title='Current Projects'
         topMargin='mt-2'
-        TopSideButtons={<TopSideButtons />}
+        TopSideButtons={
+          role === 'ROLE_MANAGER' || role === 'ROLE_ADMIN' ? (
+            <TopSideButtons />
+          ) : (
+            ''
+          )
+        }
       >
         {/* Projects List in table format loaded from slice after api call */}
         <div className='overflow-x-auto w-full'>

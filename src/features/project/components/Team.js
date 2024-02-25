@@ -48,7 +48,7 @@ function RoleSelect({ role, userId }) {
   );
 }
 
-function Team({id}) {
+function Team({id, role}) {
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
@@ -104,8 +104,14 @@ function Team({id}) {
                   <td>{l.email}</td>
                   <td>{l.joinedOn}</td>
                   {/* <td>{RoleSelect(l.role, l.id)}</td> */}
+                  
                   <td>
+                  {role === 'ROLE_MANAGER' || role === 'ROLE_ADMIN' ? (
                     <RoleSelect role={l.role} userId={l.id}></RoleSelect>
+                  ) : (
+                    l.role
+                  )}
+                   
                   </td>
                   <td>{l.lastActive}</td>
                 </tr>
@@ -114,7 +120,6 @@ function Team({id}) {
           </tbody>
         </table>
       </div>
-      {/* </TitleCard> */}
     </>
   );
 }
