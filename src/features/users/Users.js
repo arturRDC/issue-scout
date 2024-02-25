@@ -28,6 +28,7 @@ function Users() {
                   <th>Name</th>
                   <th>Email Id</th>
                   <th>Joined On</th>
+                  <th>Role</th>
                   <th>Last Active</th>
                 </tr>
               </thead>
@@ -49,6 +50,7 @@ function Users() {
                       </td>
                       <td>{l.email}</td>
                       <td>{l.joinedOn}</td>
+                      <td>{l.role}</td>
                       <td>{l.lastActive}</td>
                     </tr>
                   );

@@ -6,47 +6,9 @@ import { showNotification } from '../../common/headerSlice';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-const TopSideButtons = () => {
-  const dispatch = useDispatch();
 
-  const addNewTeamMember = () => {
-    dispatch(
-      showNotification({ message: 'Add New Member clicked', status: 1 })
-    );
-  };
 
-  return (
-    <div className='inline-block float-right'>
-      <button
-        className='btn px-6 btn-sm normal-case btn-primary'
-        onClick={() => addNewTeamMember()}
-      >
-        Invite New
-      </button>
-    </div>
-  );
-};
 
-function RoleSelect({ role, userId }) {
-  const { id } = useParams();
-  const handleRoleSelect = (e) => {
-    const role = e.target.value;
-    axios.post(`/api/projects/${id}/changeRole/${userId}/${role}`);
-  };
-  return (
-    <>
-      <select
-        className='select select-bordered select-sm w-max'
-        defaultValue={role}
-        onChange={handleRoleSelect}
-      >
-        <option value={'Developer'}>Developer</option>
-        <option value={'Manager'}>Manager</option>
-        <option value={'Submitter'}>Submitter</option>
-      </select>
-    </>
-  );
-}
 
 function Team() {
   const [members, setMembers] = useState([]);
@@ -59,17 +21,6 @@ function Team() {
     }
     fetchUsers();
   }, []);
-
-  //   const getRoleComponent = (role) => {
-  //     if (role === 'Developer')
-  //       return <div className='badge badge-secondary'>{role}</div>;
-  //     if (role === 'Manager') return <div className='badge'>{role}</div>;
-  //     if (role === 'Owner')
-  //       return <div className='badge badge-primary'>{role}</div>;
-  //     if (role === 'Submitter')
-  //       return <div className='badge badge-accent'>{role}</div>;
-  //     else return <div className='badge badge-ghost'>{role}</div>;
-  //   };
 
   return (
     <>
@@ -105,7 +56,7 @@ function Team() {
                   <td>{l.joinedOn}</td>
                   {/* <td>{RoleSelect(l.role, l.id)}</td> */}
                   <td>
-                    <RoleSelect role={l.role} userId={l.id}></RoleSelect>
+                    {l.role}
                   </td>
                   <td>{l.lastActive}</td>
                 </tr>

@@ -4,6 +4,7 @@ import LandingIntro from './LandingIntro';
 import ErrorText from '../../components/Typography/ErrorText';
 import InputText from '../../components/Input/InputText';
 import axios from 'axios';
+import RoleSelect from './components/RoleSelect';
 
 function Register() {
   const INITIAL_REGISTER_OBJ = {
@@ -11,6 +12,7 @@ function Register() {
     username: '',
     password: '',
     email: '',
+    roles: ['Admin'],
   };
 
   const [loading, setLoading] = useState(false);
@@ -18,9 +20,10 @@ function Register() {
   const [registerObj, setRegisterObj] = useState(INITIAL_REGISTER_OBJ);
 
   const submitForm = (e) => {
+    console.log(registerObj);
+    console.log('registerObj');
     e.preventDefault();
     setErrorMessage('');
-
     if (registerObj.name.trim() === '')
       return setErrorMessage('Name is required!');
     if (registerObj.username.trim() === '')
@@ -70,6 +73,11 @@ function Register() {
                   labelTitle='Name'
                   updateFormValue={updateFormValue}
                 />
+                <RoleSelect
+                  updateType='roles'
+                  defaultValue={registerObj.roles[0]}
+                  updateFormValue={updateFormValue}
+                ></RoleSelect>
                 <InputText
                   defaultValue={registerObj.username}
                   updateType='username'
