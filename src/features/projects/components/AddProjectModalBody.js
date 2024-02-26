@@ -1,23 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import InputText from '../../../components/Input/InputText';
 import ErrorText from '../../../components/Typography/ErrorText';
 import { showNotification } from '../../common/headerSlice';
 import { addNewProject } from '../projectSlice';
-import checkAuth from '../../../app/auth';
 import moment from 'moment';
-
-const token = checkAuth();
-
-const INITIAL_PROJECT_OBJ = {
-  name: '',
-  desc: '',
-  manager: token,
-  updatedAt: moment(new Date()).format('dd MMM yy HH:mm'),
-  createdAt: moment(new Date()).format('DD MMM YY'),
-};
+import axios from 'axios';
 
 function AddProjectModalBody({ closeModal }) {
+  const [name, setName] = useState('');
+  const INITIAL_PROJECT_OBJ = {
+    name: '',
+    desc: '',
+    manager: name,
+    updatedAt: moment(new Date()).format('dd MMM yy HH:mm'),
+    createdAt: moment(new Date()).format('dd MMM yy'),
+  };
+  useEffect(() => {
+    axios
+      .get('/api/auth/me')
+      .then((res) => setName(res.data.username))
+      .catch(() => console.error('error fetching data'));
+  }, []);
+
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -32,12 +37,26 @@ function AddProjectModalBody({ closeModal }) {
       let newProjectObj = {
         name: projectObj.name,
         desc: projectObj.desc,
-        manager: token,
+        manager: name.charAt(0).toUpperCase() + name.substring(1),
         updatedAt: moment(new Date()).format('DD MMM YY HH:mm'),
         createdAt: moment(new Date()).format('DD MMM YY'),
       };
-      dispatch(addNewProject({ newProjectObj }));
-      dispatch(showNotification({ message: 'New Project Added!', status: 1 }));
+      let fData = new FormData();
+      fData.append("name", projectObj.name);
+      fData.append("desc", projectObj.desc);
+      axios
+        .post('/api/projects', fData)
+        .then(() => {
+          dispatch(
+            showNotification({ message: 'New Project Added!', status: 1 })
+          );
+          dispatch(addNewProject({ newProjectObj }));
+        })
+        .catch((e) => {
+          dispatch(
+            showNotification({ message: 'Unable to create Project', status: 0 })
+          );
+        });
       closeModal();
     }
   };
