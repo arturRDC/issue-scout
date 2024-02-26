@@ -20,7 +20,7 @@ function AddLeadModalBody({closeModal}){
 
     const saveNewLead = () => {
         if(leadObj.first_name.trim() === "")return setErrorMessage("First Name is required!")
-        else if(leadObj.email.trim() === "")return setErrorMessage("Email id is required!")
+        else if(leadObj.email.trim() === "")return setErrorMessage("Email is required!")
         else{
             let newLeadObj = {
                 "id": 7,
@@ -47,7 +47,7 @@ function AddLeadModalBody({closeModal}){
 
             <InputText type="text" defaultValue={leadObj.last_name} updateType="last_name" containerStyle="mt-4" labelTitle="Last Name" updateFormValue={updateFormValue}/>
 
-            <InputText type="email" defaultValue={leadObj.email} updateType="email" containerStyle="mt-4" labelTitle="Email Id" updateFormValue={updateFormValue}/>
+            <InputText type="email" defaultValue={leadObj.email} updateType="email" containerStyle="mt-4" labelTitle="Email" updateFormValue={updateFormValue}/>
 
 
             <ErrorText styleClass="mt-16">{errorMessage}</ErrorText>

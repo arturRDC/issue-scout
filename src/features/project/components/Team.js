@@ -79,7 +79,7 @@ function Team({id, role}) {
           <thead>
             <tr>
               <th>Name</th>
-              <th>Email Id</th>
+              <th>Email</th>
               <th>Joined On</th>
               <th>Role</th>
               <th>Last Active</th>

@@ -58,7 +58,7 @@ function Leads(){
                     <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Email Id</th>
+                        <th>Email</th>
                         <th>Created At</th>
                         <th>Status</th>
                         <th>Assigned To</th>

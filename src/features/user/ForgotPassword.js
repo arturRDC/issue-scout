@@ -20,7 +20,7 @@ function ForgotPassword(){
         e.preventDefault()
         setErrorMessage("")
 
-        if(userObj.emailId.trim() === "")return setErrorMessage("Email Id is required! (use any value)")
+        if(userObj.emailId.trim() === "")return setErrorMessage("Email is required!")
         else{
             setLoading(true)
             // Call API to send password reset link
@@ -58,12 +58,12 @@ function ForgotPassword(){
                     {
                         !linkSent && 
                         <>
-                            <p className='my-8 font-semibold text-center'>We will send password reset link on your email Id</p>
+                            <p className='my-8 font-semibold text-center'>We will send password reset link on your email</p>
                             <form onSubmit={(e) => submitForm(e)}>
 
                                 <div className="mb-4">
 
-                                    <InputText type="emailId" defaultValue={userObj.emailId} updateType="emailId" containerStyle="mt-4" labelTitle="Email Id" updateFormValue={updateFormValue}/>
+                                    <InputText type="emailId" defaultValue={userObj.emailId} updateType="emailId" containerStyle="mt-4" labelTitle="Email" updateFormValue={updateFormValue}/>
 
 
                                 </div>

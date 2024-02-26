@@ -85,7 +85,7 @@ function Transactions(){
                     <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Email Id</th>
+                        <th>Email</th>
                         <th>Location</th>
                         <th>Amount</th>
                         <th>Transaction Date</th>
