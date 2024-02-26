@@ -48,7 +48,7 @@ function RoleSelect({ role, userId }) {
   );
 }
 
-function Team({id, role}) {
+function Team({ id, role }) {
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
@@ -59,17 +59,6 @@ function Team({id, role}) {
     }
     fetchUsers();
   }, []);
-
-  //   const getRoleComponent = (role) => {
-  //     if (role === 'Developer')
-  //       return <div className='badge badge-secondary'>{role}</div>;
-  //     if (role === 'Manager') return <div className='badge'>{role}</div>;
-  //     if (role === 'Owner')
-  //       return <div className='badge badge-primary'>{role}</div>;
-  //     if (role === 'Submitter')
-  //       return <div className='badge badge-accent'>{role}</div>;
-  //     else return <div className='badge badge-ghost'>{role}</div>;
-  //   };
 
   return (
     <>
@@ -103,16 +92,8 @@ function Team({id, role}) {
                   </td>
                   <td>{l.email}</td>
                   <td>{l.joinedOn}</td>
-                  {/* <td>{RoleSelect(l.role, l.id)}</td> */}
-                  
-                  <td>
-                  {role === 'Manager' || role === 'Admin' ? (
-                    <RoleSelect role={l.role} userId={l.id}></RoleSelect>
-                  ) : (
-                    l.role
-                  )}
-                   
-                  </td>
+
+                  <td>{l.role}</td>
                   <td>{l.lastActive}</td>
                 </tr>
               );

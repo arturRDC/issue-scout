@@ -6,9 +6,7 @@ import { showNotification } from '../../common/headerSlice';
 import { editProject } from '../../projects/projectSlice';
 import checkAuth from '../../../app/auth';
 import moment from 'moment';
-import { useParams } from 'react-router-dom';
-
-const token = checkAuth();
+import axios from 'axios';
 
 function EditProjectModalBody({ closeModal, extraObject: index }) {
   const dispatch = useDispatch();
@@ -32,8 +30,25 @@ function EditProjectModalBody({ closeModal, extraObject: index }) {
         updatedAt: moment(new Date()).format('DD MMM YY HH:mm'),
         createdAt: projectObj.createdAt,
       };
-      dispatch(editProject({ index: index - 1, updatedProjectObj }));
-      dispatch(showNotification({ message: 'Project Saved!', status: 1 }));
+      let fData = new FormData();
+      fData.append("id", Number(index));
+      fData.append("name", projectObj.name);
+      fData.append("desc", projectObj.desc);
+
+      axios
+        .put(`/api/projects/${index}`, fData)
+        .then(() => {
+          dispatch(showNotification({ message: 'Project Saved!', status: 1 }));
+          dispatch(editProject({ index: index - 1, updatedProjectObj }));
+        })
+        .catch((e) => {
+          dispatch(
+            showNotification({ message: 'Unable to save Project', status: 0 })
+          );
+        });
+
+      
+      
       closeModal();
     }
   };

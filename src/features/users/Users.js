@@ -65,7 +65,7 @@ function Users() {
                       <td>{l.role.slice(1, -1)}</td>
                       <td>
                         {formatDistanceToNowStrict(
-                          parse(l.lastActive, 'dd MMM yy HH:mm', new Date()),
+                          parse(l.lastActive, 'dd MMM yy HH:mm', moment().format('DD MMM YY HH:mm')),
                           { addSuffix: true }
                         )}
                       </td>
