@@ -106,7 +106,7 @@ function Team({id, role}) {
                   {/* <td>{RoleSelect(l.role, l.id)}</td> */}
                   
                   <td>
-                  {role === 'ROLE_MANAGER' || role === 'ROLE_ADMIN' ? (
+                  {role === 'Manager' || role === 'Admin' ? (
                     <RoleSelect role={l.role} userId={l.id}></RoleSelect>
                   ) : (
                     l.role

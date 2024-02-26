@@ -149,7 +149,7 @@ function Project() {
               <div className='card-body'>
                 <div className='text-xl font-semibold'>
                   {project.name}
-                  {role === 'ROLE_MANAGER' || role === 'ROLE_ADMIN' ? (
+                  {role === 'Manager' || role === 'Admin' ? (
                     <div className='inline-block float-right'>
                       {<TopSideButtons></TopSideButtons>}
                     </div>
@@ -178,7 +178,7 @@ function Project() {
               <div className='card-body'>
                 <div className='text-xl font-semibold'>
                   {project.name}'s users
-                  {role === 'ROLE_MANAGER' || role === 'ROLE_ADMIN' ? (
+                  {role === 'Manager' || role === 'Admin' ? (
                     <div className='inline-block float-right'>
                       {<AddUserButton></AddUserButton>}
                     </div>

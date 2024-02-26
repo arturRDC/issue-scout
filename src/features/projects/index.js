@@ -47,6 +47,8 @@ function Projects() {
     dispatch(getProjectsContent());
     axios.get('/api/auth/me').then((res) => {
       setRole(res.data.authorities[0].authority);
+      console.log('res.data.authorities[0].authority');
+      console.log(res.data.authorities[0].authority);
     });
   }, []);
 
@@ -56,7 +58,7 @@ function Projects() {
         title='Current Projects'
         topMargin='mt-2'
         TopSideButtons={
-          role === 'ROLE_MANAGER' || role === 'ROLE_ADMIN' ? (
+          role === 'Manager' || role === 'Admin' ? (
             <TopSideButtons />
           ) : (
             ''

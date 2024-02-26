@@ -152,7 +152,7 @@ function Ticket() {
                 <div className='text-xl font-semibold'>
                   {ticketObj.title}
 
-                  {role !== 'ROLE_SUBMITTER' ? (
+                  {role !== 'Submitter' ? (
                     <div className='inline-block float-right'>
                       {<TopSideButtons></TopSideButtons>}
                     </div>
