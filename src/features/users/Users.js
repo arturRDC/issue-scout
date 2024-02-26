@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { parse, formatDistanceToNowStrict, format } from 'date-fns';
 
 function Users() {
   const [members, setUsers] = useState([]);
@@ -14,7 +14,6 @@ function Users() {
     }
     fetchUsers();
   }, []);
-
 
   return (
     <>
@@ -39,19 +38,37 @@ function Users() {
                       <td>
                         <div className='flex items-center space-x-3'>
                           <div className='avatar'>
-                            <div className='mask mask-circle w-12 h-12'>
-                              <img src={l.avatar} alt='Avatar' />
-                            </div>
+                            {l.avatar === '' ? (
+                              <div className='avatar placeholder'>
+                                <div className='bg-secondary text-neutral-content rounded-full w-8'>
+                                  <span className='text-sm'>
+                                    {l.name.charAt(0).toUpperCase()}
+                                  </span>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className='mask mask-circle w-12 h-12'>
+                                <img src={l.avatar} alt='Avatar' />
+                              </div>
+                            )}
                           </div>
                           <div>
-                            <div className='font-bold'>{l.name}</div>
+                            <div className='font-bold'>
+                              {l.name.charAt(0).toUpperCase() +
+                                l.name.substring(1)}
+                            </div>
                           </div>
                         </div>
                       </td>
                       <td>{l.email}</td>
                       <td>{l.joinedOn}</td>
-                      <td>{l.role}</td>
-                      <td>{l.lastActive}</td>
+                      <td>{l.role.slice(1, -1)}</td>
+                      <td>
+                        {formatDistanceToNowStrict(
+                          parse(l.lastActive, 'dd MMM yy HH:mm', new Date()),
+                          { addSuffix: true }
+                        )}
+                      </td>
                     </tr>
                   );
                 })}
