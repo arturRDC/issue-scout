@@ -45,10 +45,14 @@ function ProfileSettings() {
     }
     const formData = new FormData();
     for (let property in profileObj) {
-      if (profileObj.hasOwnProperty(property))
+      if (
+        profileObj.hasOwnProperty(property) &&
+        property !== 'repeatPassword' &&
+        profileObj[property] !== ''
+      )
         formData.append(property, profileObj[property]);
     }
-    axios.post('/api/profile', formData, {
+    axios.put('/api/users/profile', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
