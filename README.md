@@ -3,7 +3,7 @@
 
 
 ## Demo
-![App gif](https://github.com/arturRDC/issue-scout/raw/master/demo.gif)
+![App gif](https://github.com/arturRDC/issue-scout/raw/main/demo.gif)
 
 
 ## Installation
